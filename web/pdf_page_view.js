@@ -126,7 +126,7 @@ class PDFPageView {
   }
 
   destroy() {
-    this.reset();
+    this.reset(false, true);
     if (this.pdfPage) {
       this.pdfPage.cleanup();
     }
