@@ -437,6 +437,18 @@ class TextWidgetAnnotationElement extends WidgetAnnotationElement {
         element.classList.add('comb');
         element.style.letterSpacing = 'calc(' + combWidth + 'px - 1ch)';
       }
+
+      /*
+      if(this.data.fieldName.includes("oday")) {
+          console.log("found oday string in fieldname in layer");
+      }
+
+      let font = null;
+      if (this.data.fontRefName) {
+        font = this.page.commonObjs.getData(this.data.fontRefName);
+      }
+      this._setTextStyle(element, font);
+      */
     } else {
       element = document.createElement('div');
       element.textContent = this.data.fieldValue;

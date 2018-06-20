@@ -666,9 +666,14 @@ class WidgetAnnotation extends Annotation {
   getOperatorList(evaluator, task, renderForms) {
     // Do not render form elements on the canvas when interactive forms are
     // enabled. The display layer is responsible for rendering them instead.
+    
+    //Allow canvas to draw annotations to preserve styles (transparency etc)
+    /*
     if (renderForms) {
       return Promise.resolve(new OperatorList());
     }
+    */
+
     return super.getOperatorList(evaluator, task, renderForms);
   }
 }
@@ -682,6 +687,14 @@ class TextWidgetAnnotation extends WidgetAnnotation {
     // The field value is always a string.
     this.data.fieldValue = stringToPDFString(this.data.fieldValue || '');
 
+    /*
+    if(this.data.fieldName.includes("oday")) {
+        console.log("found oday string in field name. data, appearance: ", this.data.fieldName, this.data, this.appearance);
+        let appearanceStates = params.dict.get('AP');
+        console.log("appearance states: ", appearanceStates);
+    }
+    */
+   
     // Determine the alignment of text in the field.
     let alignment = getInheritableProperty({ dict, key: 'Q', });
     if (!Number.isInteger(alignment) || alignment < 0 || alignment > 2) {
