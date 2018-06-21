@@ -438,6 +438,48 @@ class Annotation {
         resources,
         operatorList: opList,
       }).then(() => {
+
+        if(renderForms) {
+
+            let disallowedOperators = [];
+            //console.log("data subtype", data.subtype);
+            
+            if(data.subtype == 'Widget') {
+
+                //console.log("Widget type detected, fieldType", data.fieldType);
+
+                if(data.fieldType == 'Tx') {
+                    //text
+                    disallowedOperators.push(OPS.showText);
+
+                } else if(data.fieldType == 'Btn') {
+                    //button
+
+                } else if(data.fieldType == 'Ch') {
+                    //choice
+
+                }
+
+            }
+            
+            let trimmedOpList = new OperatorList();
+            let operatorCount = opList.length;
+
+            for(let i=0; i<operatorCount; i++) {
+                if(disallowedOperators.indexOf(opList.fnArray[i]) < 0) {
+
+                    trimmedOpList.addOp(opList.fnArray[i], opList.argsArray[i]);
+                }
+                /*
+                if(data.fieldName.includes("oday")) {
+                    console.log("found oday string in oplist trim", opList);
+                }
+                */
+                
+            }
+            opList = trimmedOpList;
+        }
+
         opList.addOp(OPS.endAnnotation, []);
         this.appearance.reset();
         return opList;
