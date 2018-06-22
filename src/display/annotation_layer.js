@@ -197,7 +197,7 @@ class AnnotationElement {
         default:
           break;
       }
-
+      
       if (data.color) {
         container.style.borderColor = Util.makeCssRgb(data.color[0] | 0,
                                                       data.color[1] | 0,
@@ -395,7 +395,7 @@ class TextWidgetAnnotationElement extends WidgetAnnotationElement {
   constructor(parameters) {
     let isRenderable = parameters.renderInteractiveForms ||
       (!parameters.data.hasAppearance && !!parameters.data.fieldValue);
-    super(parameters, isRenderable);
+    super(parameters, isRenderable, true); //ignore text widget borders
   }
 
   /**
@@ -438,17 +438,30 @@ class TextWidgetAnnotationElement extends WidgetAnnotationElement {
         element.style.letterSpacing = 'calc(' + combWidth + 'px - 1ch)';
       }
 
-      /*
-      if(this.data.fieldName.includes("oday")) {
-          console.log("found oday string in fieldname in layer");
+      //This is terrible, but it works to set font and size on widgets
+      if(this.data.defaultAppearance) {
+          //manually parse defaultAppearance ops
+          let ops = this.data.defaultAppearance.split(' ');
+          for(let i=0; i<ops.length; i++) {
+              if(ops[i] == 'Tf') {
+                  //set font op, 2 arguments invariable
+                  let fontRef = ops[i-2];
+                  let fontSize = ops[i-1];
+                  //console.log('set font op', fontRef, fontSize);
+                  this.data.fontRefName = fontRef;
+                  this.data.fontSize = fontSize;
+              }
+          }
       }
 
       let font = null;
       if (this.data.fontRefName) {
+        //console.log("trying to get font ref name", this.data.fontRefName);
         font = this.page.commonObjs.getData(this.data.fontRefName);
       }
+      //console.log('setting annotation text style', font);
       this._setTextStyle(element, font);
-      */
+
     } else {
       element = document.createElement('div');
       element.textContent = this.data.fieldValue;

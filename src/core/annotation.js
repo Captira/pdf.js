@@ -415,6 +415,7 @@ class Annotation {
 
     let data = this.data;
     let appearanceDict = this.appearance.dict;
+    //console.log('getting operator list for annotation ', data.fieldName);
     let resourcesPromise = this.loadResources([
       'ExtGState',
       'ColorSpace',
@@ -441,9 +442,11 @@ class Annotation {
 
         if(renderForms) {
 
+            //console.log('returning operator list for annotation', data.fieldName, resources);
+
             let disallowedOperators = [];
             //console.log("data subtype", data.subtype);
-            
+
             if(data.subtype == 'Widget') {
 
                 //console.log("Widget type detected, fieldType", data.fieldType);
@@ -470,6 +473,13 @@ class Annotation {
 
                     trimmedOpList.addOp(opList.fnArray[i], opList.argsArray[i]);
                 }
+
+                /*
+                if(opList.fnArray[i] == OPS.setFont) {
+                    console.log("detected set font in annotation appearance", data.fieldName, opList.fnArray[i], opList.argsArray[i]);
+                }
+                */
+                //console.log("operator", opList.fnArray[i]);
                 /*
                 if(data.fieldName.includes("oday")) {
                     console.log("found oday string in oplist trim", opList);
@@ -478,6 +488,9 @@ class Annotation {
                 
             }
             opList = trimmedOpList;
+
+
+            
         }
 
         opList.addOp(OPS.endAnnotation, []);
