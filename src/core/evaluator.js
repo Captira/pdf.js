@@ -245,9 +245,13 @@ var PartialEvaluator = (function PartialEvaluatorClosure() {
             key = graphicStatesKeys[i];
 
             var graphicState = graphicStates.get(key);
-            var bm = graphicState.get('BM');
-            if (isName(bm) && bm.name !== 'Normal') {
-              return true;
+            //if(graphicState) console.log('graphicState', graphicState);
+
+            if(graphicState && graphicState.dict) {
+                var bm = graphicState.dict.get('BM');
+                if (isName(bm) && bm.name !== 'Normal') {
+                    return true;
+                }
             }
           }
         }
