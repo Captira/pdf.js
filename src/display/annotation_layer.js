@@ -561,6 +561,8 @@ class RadioButtonWidgetAnnotationElement extends WidgetAnnotationElement {
     element.disabled = this.data.readOnly;
     element.type = 'radio';
     element.name = this.data.fieldName;
+    element.value = this.data.buttonValue;
+    
     if (this.data.fieldValue === this.data.buttonValue) {
       element.setAttribute('checked', true);
     }
