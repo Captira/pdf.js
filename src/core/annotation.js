@@ -440,9 +440,11 @@ class Annotation {
         operatorList: opList,
       }).then(() => {
 
+        //console.log('returning operator list for annotation', evaluator, opList, data.fieldName, resources);
+
         if(renderForms) {
 
-            //console.log('returning operator list for annotation', data.fieldName, resources);
+            //console.log('returning operator list for annotation', opList, data.fieldName, resources);
 
             let disallowedOperators = [];
             //console.log("data subtype", data.subtype);
